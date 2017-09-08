@@ -1,32 +1,32 @@
-//mall.c -- Ê¹ÓÃQueue½Ó¿Ú
+//mall.c -- ä½¿ç”¨Queueæ¥å£
 
 #pragma warning(disable: 4996)
 
 #include <stdio.h>
-#include <stdlib.h>						//Îªsrand()ºÍrand()Ìá¹©º¯ÊıÔ­ĞÍ
-#include <assert.h>						//ºêassert()
-#include <time.h>						//Îªtime()º¯ÊıÌá¹©Ô­ĞÍ
-#include "queue.h"						//¸Ä±äItemµÄtypedef
+#include <stdlib.h>					//ä¸ºsrand()å’Œrand()æä¾›å‡½æ•°åŸå‹
+#include <assert.h>					//å®assert()
+#include <time.h>					//ä¸ºtime()å‡½æ•°æä¾›åŸå‹
+#include "queue.h"					//æ”¹å˜Itemçš„typedef
 
 #define MIN_PER_HR 60.0
 
-bool newcustomer(double x);				//ÓĞĞÂ¹Ë¿Íµ½À´Âğ£¿
-Item customertime(long when);			//ÉèÖÃ¹Ë¿Í²ÎÁ¿
+bool newcustomer(double x);				//æœ‰æ–°é¡¾å®¢åˆ°æ¥å—ï¼Ÿ
+Item customertime(long when);				//è®¾ç½®é¡¾å®¢å‚é‡
 
 int main(void)
 {
 	Queue line;
-	Item temp;							//¹ØÓÚĞÂ¹Ë¿ÍµÄÊı¾İ
-	int hours;							//Ä£ÄâµÄĞ¡Ê±Êı
-	int perhour;						//Ã¿Ğ¡Ê±¹Ë¿ÍµÄÆ½¾ùÊı
-	long cycle, cyclelimit;				//Ñ­»·¼ÆÊıÆ÷£¬¼ÆÊıÆ÷µÄÉÏ½ç
-	long turnaways = 0;					//Òò¶ÓÁĞÒÑÂú¶ø±»¾Ü¾øµÄ¹Ë¿ÍÊı
-	long customers = 0;					//±»¼ÓÈë¶ÓÁĞµÄ¹Ë¿ÍÊı
-	long served = 0;					//ÔÚÄ£ÄâÆÚ¼äµÃµ½·şÎñµÄ¹Ë¿ÍÊı
-	long sum_line = 0;					//ÀÛ¼ÆµÄ¶ÓÁĞ³¤¶È
-	int wait_time = 0;					//´Óµ±Ç°µ½Siqmund¿ÕÏĞËùĞèµÄÊ±¼ä
-	long line_wait = 0L;				//¶ÓÁĞÀÛ¼ÆµÈ´ıÊ±¼ä
-	double min_per_cust;				//¹Ë¿Íµ½À´µÄÆ½¾ù¼ä¸ôÊ±¼ä
+	Item temp;					//å…³äºæ–°é¡¾å®¢çš„æ•°æ®
+	int hours;					//æ¨¡æ‹Ÿçš„å°æ—¶æ•°
+	int perhour;					//æ¯å°æ—¶é¡¾å®¢çš„å¹³å‡æ•°
+	long cycle, cyclelimit;				//å¾ªç¯è®¡æ•°å™¨ï¼Œè®¡æ•°å™¨çš„ä¸Šç•Œ
+	long turnaways = 0;				//å› é˜Ÿåˆ—å·²æ»¡è€Œè¢«æ‹’ç»çš„é¡¾å®¢æ•°
+	long customers = 0;				//è¢«åŠ å…¥é˜Ÿåˆ—çš„é¡¾å®¢æ•°
+	long served = 0;				//åœ¨æ¨¡æ‹ŸæœŸé—´å¾—åˆ°æœåŠ¡çš„é¡¾å®¢æ•°
+	long sum_line = 0;				//ç´¯è®¡çš„é˜Ÿåˆ—é•¿åº¦
+	int wait_time = 0;				//ä»å½“å‰åˆ°Siqmundç©ºé—²æ‰€éœ€çš„æ—¶é—´
+	long line_wait = 0L;				//é˜Ÿåˆ—ç´¯è®¡ç­‰å¾…æ—¶é—´
+	double min_per_cust;				//é¡¾å®¢åˆ°æ¥çš„å¹³å‡é—´éš”æ—¶é—´
 
 	InitializeQueue(&line);
 	srand((unsigned int)time(NULL));
@@ -86,8 +86,8 @@ int main(void)
 
 }
 
-/*xÊÇ¹Ë¿Íµ½À´µÄÆ½¾ù¼ä¸ôÊ±¼ä£¨ÒÔÃë¼Æ£©
-Èç¹ûÕâ1·ÖÖÓÄÚÓĞ¹Ë¿Íµ½À´£¬Ôò·µ»Øtrue*/
+/*xæ˜¯é¡¾å®¢åˆ°æ¥çš„å¹³å‡é—´éš”æ—¶é—´ï¼ˆä»¥ç§’è®¡ï¼‰
+å¦‚æœè¿™1åˆ†é’Ÿå†…æœ‰é¡¾å®¢åˆ°æ¥ï¼Œåˆ™è¿”å›true*/
 bool newcustomer(double x)
 {
 	if (rand() * x / RAND_MAX < 1)
@@ -100,9 +100,9 @@ bool newcustomer(double x)
 	}
 }
 
-/*whenÊÇ¹Ë¿Íµ½À´µÄÊ±¼ä
-º¯Êı·µ»ØÒ»¸öItem½á¹¹£¬¸Ã½á¹¹µÄ¹Ë¿Íµ½À´Ê±¼äÉèÎªwhen
-ĞèÒª×ÉÑ¯µÄÊ±¼äÉèÎªÒ»¸ö1µ½3Ö®¼äµÄËæ»úÖµ*/
+/*whenæ˜¯é¡¾å®¢åˆ°æ¥çš„æ—¶é—´
+å‡½æ•°è¿”å›ä¸€ä¸ªItemç»“æ„ï¼Œè¯¥ç»“æ„çš„é¡¾å®¢åˆ°æ¥æ—¶é—´è®¾ä¸ºwhen
+éœ€è¦å’¨è¯¢çš„æ—¶é—´è®¾ä¸ºä¸€ä¸ª1åˆ°3ä¹‹é—´çš„éšæœºå€¼*/
 Item customertime(long when)
 {
 	Item cust;
