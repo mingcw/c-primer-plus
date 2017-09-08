@@ -14,8 +14,8 @@ int main(void)
 {
 	char file_app[SIZEFILE];		//要追加的目的文件名
 	char file_src[SIZEFILE];		//源文件名
-	FILE * fa, *fs;					//fa指向追加的目的文件，fs指向源文件
-	int count = 0;						//源文件计数器
+	FILE * fa, *fs;				//fa指向追加的目的文件，fs指向源文件
+	int count = 0;				//源文件计数器
 
 	system("color 5A");
 	//获取追加文件名
