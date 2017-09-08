@@ -1,5 +1,5 @@
 
-//ÔÙ´ÎÊìÏ¤¡¢ÕÆÎÕÎÄ¼þIO£º°Ñ¶à¸öÎÄ¼þµÄ¶þ½øÖÆÊý¾Ý×·¼Óµ½Ò»¸öÎÄ¼þÄÚ
+//å†æ¬¡ç†Ÿæ‚‰ã€æŽŒæ¡æ–‡ä»¶IOï¼šæŠŠå¤šä¸ªæ–‡ä»¶çš„äºŒè¿›åˆ¶æ•°æ®è¿½åŠ åˆ°ä¸€ä¸ªæ–‡ä»¶å†…
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,54 +12,54 @@ void append(FILE * src, FILE * dest);
 
 int main(void)
 {
-	char file_app[SIZEFILE];		//Òª×·¼ÓµÄÄ¿µÄÎÄ¼þÃû
-	char file_src[SIZEFILE];		//Ô´ÎÄ¼þÃû
-	FILE * fa, *fs;					//faÖ¸Ïò×·¼ÓµÄÄ¿µÄÎÄ¼þ£¬fsÖ¸ÏòÔ´ÎÄ¼þ
-	int count = 0;						//Ô´ÎÄ¼þ¼ÆÊýÆ÷
+	char file_app[SIZEFILE];		//è¦è¿½åŠ çš„ç›®çš„æ–‡ä»¶å
+	char file_src[SIZEFILE];		//æºæ–‡ä»¶å
+	FILE * fa, *fs;					//faæŒ‡å‘è¿½åŠ çš„ç›®çš„æ–‡ä»¶ï¼ŒfsæŒ‡å‘æºæ–‡ä»¶
+	int count = 0;						//æºæ–‡ä»¶è®¡æ•°å™¨
 
 	system("color 5A");
-	//»ñÈ¡×·¼ÓÎÄ¼þÃû
+	//èŽ·å–è¿½åŠ æ–‡ä»¶å
 	puts("Enter name of destination file:");
 	gets_s(file_app, SIZEFILE);
 
-	//´ò¿ªÒª×·¼ÓµÄÄ¿µÄÎÄ¼þ,»ñµÃÊä³öÁ÷£¨ÎÄ±¾Á÷£©
+	//æ‰“å¼€è¦è¿½åŠ çš„ç›®çš„æ–‡ä»¶,èŽ·å¾—è¾“å‡ºæµï¼ˆæ–‡æœ¬æµï¼‰
 	if (fopen_s(&fa, file_app, "a") != 0)
 	{
 		fprintf(stderr, "Can't open file %s!\n", file_app);
 		exit(EXIT_FAILURE);
 	}
 
-	//¹ØÁªÊä³öÁ÷µÄ»º³åÇø
+	//å…³è”è¾“å‡ºæµçš„ç¼“å†²åŒº
 	if (setvbuf(fa, NULL, _IOFBF, SIZEBUF) != 0)
 	{
 		fputs("Can't create output buffer!\n", stderr);
 		exit(EXIT_FAILURE);
 	}
 
-	//Ñ­»·»ñÈ¡Ô´ÎÄ¼þÃû
+	//å¾ªçŽ¯èŽ·å–æºæ–‡ä»¶å
 	puts("Enter name of first file (empty to quit):");
 	while (gets_s(file_src, SIZEFILE) != NULL && file_src[0] != '\0')
 	{
-		//¼ì²âÎÄ¼þÃûÖØ¸´,·ñ¼ÌÐø£¬ÊÇÊäÈëÏÂÒ»¸öÔ´ÎÄ¼þÃû
+		//æ£€æµ‹æ–‡ä»¶åé‡å¤,å¦ç»§ç»­ï¼Œæ˜¯è¾“å…¥ä¸‹ä¸€ä¸ªæºæ–‡ä»¶å
 		if (strcmp(file_app, file_src) == 0)
 		{
 			fputs("Can't append file to itself.\n", stderr);
 		}
-		//´ò¿ªÔ´ÎÄ¼þ£¬»ñµÃÊäÈëÁ÷£¨ÎÄ±¾Á÷£©,³É¹¦¼ÌÐø£¬Ê§°ÜÊäÈëÏÂÒ»¸öÔ´ÎÄ¼þÃû
+		//æ‰“å¼€æºæ–‡ä»¶ï¼ŒèŽ·å¾—è¾“å…¥æµï¼ˆæ–‡æœ¬æµï¼‰,æˆåŠŸç»§ç»­ï¼Œå¤±è´¥è¾“å…¥ä¸‹ä¸€ä¸ªæºæ–‡ä»¶å
 		else if (fopen_s(&fs, file_src, "r") != 0)
 		{
 			fprintf(stderr, "Can't open file %s!\n", file_src);
 		}
 		else
 		{
-			//¹ØÁªÊäÈëÁ÷µÄ»º³åÇø
+			//å…³è”è¾“å…¥æµçš„ç¼“å†²åŒº
 			if (setvbuf(fs, NULL, _IOFBF, SIZEBUF) != 0)
 			{
 				fputs("Can't create input buffer!\n", stderr);
 				continue;
 			}
-			append(fs, fa);									//×·¼ÓÊý¾ç
-			//¼ì²â¶ÁÐ´´íÎó
+			append(fs, fa);								//è¿½åŠ æ•°å‰§
+			//æ£€æµ‹è¯»å†™é”™è¯¯
 			if (ferror(fa) != 0)
 			{
 				fprintf(stderr, "Error in writing file %s.\n", file_app);
@@ -68,12 +68,12 @@ int main(void)
 			{
 				fprintf(stderr, "Error in reading file %s.\n", file_src);
 			}
-			fclose(fs);										//¹Ø±ÕÔ´ÎÄ¼þ(Í¬Ê±Ïú»Ù»º³åÇø)
-			++count;										//¼ÆÊýÆ÷+1
+			fclose(fs);								//å…³é—­æºæ–‡ä»¶(åŒæ—¶é”€æ¯ç¼“å†²åŒº)
+			++count;								//è®¡æ•°å™¨+1
 			puts("Next name (empty to quit):");
 		}
 	}
-	fclose(fa);												//¹Ø±Õ×·¼ÓÎÄ¼þ(Í¬Ê±Ïú»Ù»º³åÇø)
+	fclose(fa);										//å…³é—­è¿½åŠ æ–‡ä»¶(åŒæ—¶é”€æ¯ç¼“å†²åŒº)
 	fprintf(stdout, "Done. %d files appended.\n", count);
 
 	system("pause");
@@ -84,11 +84,9 @@ int main(void)
 void append(FILE * src, FILE * dest)
 {
 	size_t count, wc = 0;
-	static char temp[SIZEBUF];								//·ÖÅäÒ»´Î
+	static char temp[SIZEBUF];								//åˆ†é…ä¸€æ¬¡
 
-	while ((count = fread(temp, sizeof(char), SIZEBUF, src)) > 0)			/*ºÜºÃ£¬µ÷ÊÔÁË¼¸¸öÐ¡Ê±£¬ÖÕÓÚÖªµÀÎªÊ²Ã´Ö»Ð´Ò»¸ö×Ö·û¡£¡£¡£
-																			ÎÒTM¸øcount=fread()>0Ã»´øÀ¨ºÅ£¬¹ûÈ»ÊÇ×Ô×÷×ÔÊÜ£¨ÄÄÀïÃ»´øÀ¨ºÅ£¬×Ô¼º¿´°É£©
-																			Ð´´úÂëÌøÀ´ÌøÈ¥µÄ£¬À¨ºÅ¸øÍüÁË£¬¹ûÈ»ÊÇ¸ö·ÏÎï£¡£¡*/
+	while ((count = fread(temp, sizeof(char), SIZEBUF, src)) > 0)
 	{
 		wc += fwrite(temp, sizeof(char), count, dest);
 	}
