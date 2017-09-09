@@ -1,20 +1,20 @@
-//tree.c -- Ê÷ÀàĞÍµÄÊµÏÖ½Ó¿Ú
+//tree.c -- æ ‘ç±»å‹çš„å®ç°æ¥å£
 
 #include <stdio.h>
-#include <stdlib.h>							//malloc(), free()
-#include <stdbool.h>						//boolÀàĞÍÏòC++¼æÈİ
-#include <string.h>							//strcmp()
+#include <stdlib.h>						//malloc(), free()
+#include <stdbool.h>						//boolç±»å‹å‘C++å…¼å®¹
+#include <string.h>						//strcmp()
 #include <Windows.h>						//Sleep()
 #include "tree.h"
 
-//¾Ö²¿Êı¾İÀàĞÍ
+//å±€éƒ¨æ•°æ®ç±»å‹
 typedef struct pair
 {
 	Node * parent;
 	Node * child;
 } Pair;
 
-//¾Ö²¿º¯ÊıÔ­ĞÍ
+//å±€éƒ¨å‡½æ•°åŸå‹
 static Node * MakeNode(const Item * pi);
 static bool ToLeft(const Item * pi1, const Item * pi2);
 static bool ToRight(const Item * pi1, const Item * pi2);
@@ -25,7 +25,7 @@ static void DeleteNode(Node ** ptr);
 static void DeleteAllNodes(Node * root);
 
 
-//º¯Êı¶¨Òå
+//å‡½æ•°å®šä¹‰
 void InitializeTree(Tree * ptree)
 {
 	ptree->root = NULL;
@@ -65,27 +65,27 @@ bool AddItem(const Item * pi, Tree * ptree)
 {
 	Node  * pnew_node;
 
-	//¼ì²éÊ÷ÊÇ·ñÒÑÂú
+	//æ£€æŸ¥æ ‘æ˜¯å¦å·²æ»¡
 	if (TreeIsFull(ptree))
 	{
 		fprintf(stderr, "Tree is full.\n");
 		return false;
 	}
-	//¼ì²éÓûÌí¼ÓÏîÊÇ·ñÒÑ´æÔÚ
+	//æ£€æŸ¥æ¬²æ·»åŠ é¡¹æ˜¯å¦å·²å­˜åœ¨
 	if (SeekItem(pi, ptree).child != NULL)
 	{
 		fprintf(stderr, "Attempted to add duplicate item.\n");
 		return false;
 	}
 
-	//³¢ÊÔ´´½¨ĞÂ½Úµã
+	//å°è¯•åˆ›å»ºæ–°èŠ‚ç‚¹
 	pnew_node = MakeNode(pi);
 	if (pnew_node == NULL)
 	{
 		fprintf(stderr, "Couldn't create node.\n");
 		return false;
 	}
-	//´´½¨³É¹¦£¬¸üĞÂÊ÷½á¹¹
+	//åˆ›å»ºæˆåŠŸï¼Œæ›´æ–°æ ‘ç»“æ„
 	ptree->size++;
 	if (ptree->root == NULL)
 	{
@@ -149,14 +149,14 @@ void EmptyAll(Tree * ptree)
 
 
 
-//¾Ö²¿º¯Êı¶¨Òå
+//å±€éƒ¨å‡½æ•°å®šä¹‰
 
 Node * MakeNode(const Item * pi)
 {
 	Node * pnew_node;
 
-	pnew_node = (Node *)malloc(sizeof(Node));		//·ÖÅä½ÚµãÄÚ´æ
-	if (pnew_node != NULL)							//·ÖÅäµ½Ê±½øĞĞ½ÚµãµÄ³õÊ¼»¯
+	pnew_node = (Node *)malloc(sizeof(Node));		//åˆ†é…èŠ‚ç‚¹å†…å­˜
+	if (pnew_node != NULL)					//åˆ†é…åˆ°æ—¶è¿›è¡ŒèŠ‚ç‚¹çš„åˆå§‹åŒ–
 	{
 		pnew_node->item = *pi;
 		pnew_node->left = NULL;
@@ -201,7 +201,7 @@ bool ToRight(const Item * pi1, const Item * pi2)
 	}
 }
 
-void AddNode(Node * pnew_node, Node * root)					//µİ¹é
+void AddNode(Node * pnew_node, Node * root)			//é€’å½’
 {
 	if (ToLeft(&pnew_node->item, &root->item))
 	{
@@ -233,9 +233,9 @@ void AddNode(Node * pnew_node, Node * root)					//µİ¹é
 	}
 }
 
-void InOrder(const Node * root, void(*pfun)(Item item))		//µİ¹é
+void InOrder(const Node * root, void(*pfun)(Item item))		//é€’å½’
 {
-	//µİ¹éµ÷ÓÃ·ÃÎÊ·Ç¿ÕµÄ×ÓÊ÷£¬±éÀúË³Ğò£ºÖĞĞò±éÀú
+	//é€’å½’è°ƒç”¨è®¿é—®éç©ºçš„å­æ ‘ï¼Œéå†é¡ºåºï¼šä¸­åºéå†
 	if (root != NULL)
 	{
 		InOrder(root->left, pfun);
@@ -244,7 +244,7 @@ void InOrder(const Node * root, void(*pfun)(Item item))		//µİ¹é
 	}
 }
 
-Pair SeekItem(const Item * pi, const Tree * ptree)			//µİ¹é
+Pair SeekItem(const Item * pi, const Tree * ptree)		//é€’å½’
 {
 	Pair look;
 
@@ -253,7 +253,7 @@ Pair SeekItem(const Item * pi, const Tree * ptree)			//µİ¹é
 
 	if (look.child == NULL)
 	{
-		return look;										//¿ÕÊ÷·µ»Ø
+		return look;					//ç©ºæ ‘è¿”å›
 	}
 	while (look.child != NULL)
 	{
@@ -269,7 +269,7 @@ Pair SeekItem(const Item * pi, const Tree * ptree)			//µİ¹é
 		}
 		else
 		{
-			break;				//Èç¹ûÇ°Á½ÖÖÇé¿ö¶¼²»Âú×ã£¬±Ø¶¨ÎªÏàµÈµÄÇé¿ö£¬ÖĞ¶ÏÑ­»·£¬look.childµÈÓÚÄ¿±ê½ÚµãµÄµØÖ·
+			break;	//å¦‚æœå‰ä¸¤ç§æƒ…å†µéƒ½ä¸æ»¡è¶³ï¼Œå¿…å®šä¸ºç›¸ç­‰çš„æƒ…å†µï¼Œä¸­æ–­å¾ªç¯ï¼Œlook.childç­‰äºç›®æ ‡èŠ‚ç‚¹çš„åœ°å€
 		}
 	}
 	return look;
@@ -282,15 +282,15 @@ void DeleteNode(Node ** ptr)
 	puts((*ptr)->item.petname);
 	if ((*ptr)->left == NULL)
 	{
-		*ptr = (*ptr)->right;	//Ö»ÓĞÓÒÖ§Ê±£¬ÈÃ´ıÉ¾½ÚµãµÄ¸¸½ÚµãÖĞÖ¸Ïò¸Ã½ÚµãµÄÖ¸Õë£¬ĞŞ¸ÄÎªÖ¸Ïò´ıÉ¾½ÚµãµÄÓÒ×ÓÊ÷
+		*ptr = (*ptr)->right;	//åªæœ‰å³æ”¯æ—¶ï¼Œè®©å¾…åˆ èŠ‚ç‚¹çš„çˆ¶èŠ‚ç‚¹ä¸­æŒ‡å‘è¯¥èŠ‚ç‚¹çš„æŒ‡é’ˆï¼Œä¿®æ”¹ä¸ºæŒ‡å‘å¾…åˆ èŠ‚ç‚¹çš„å³å­æ ‘
 	}
 	else if ((*ptr)->right == NULL)
 	{
-		*ptr = (*ptr)->left;	//Í¬ÉÏ
+		*ptr = (*ptr)->left;	//åŒä¸Š
 	}
-	else						//´ıÉ¾½ÚµãÓĞ2¸ö×Ó½Úµã
+	else	//å¾…åˆ èŠ‚ç‚¹æœ‰2ä¸ªå­èŠ‚ç‚¹
 	{
-								//ÔÚ×ó×ÓÊ÷µÄÓÒÖ§²éÕÒ¿ÕµÄÓÒ×ÓÊ÷
+								//åœ¨å·¦å­æ ‘çš„å³æ”¯æŸ¥æ‰¾ç©ºçš„å³å­æ ‘
 		for (temp = (*ptr)->left; temp->right == NULL; temp = temp->right)
 		{
 			continue;
@@ -302,13 +302,13 @@ void DeleteNode(Node ** ptr)
 	}
 }
 
-void DeleteAllNodes(Node * root)							//µİ¹é
+void DeleteAllNodes(Node * root)				//é€’å½’
 {
 	Node *pright;
 
 	if (root != NULL)
 	{
-		//ÖĞĞò±éÀúÉ¾³ı·Ç¿ÕµÄ×ÓÊ÷
+		//ä¸­åºéå†åˆ é™¤éç©ºçš„å­æ ‘
 		pright = root->right;
 		DeleteAllNodes(root->left);
 		free(root);
